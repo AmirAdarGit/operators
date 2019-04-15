@@ -7,8 +7,7 @@ using namespace std;
 namespace ariel{
 class PhysicalNumber{
 
-  // friendly class operators
-  friend bool operator > (const PhysicalNumber& l,const PhysicalNumber& r);
+   friend bool operator > (const PhysicalNumber& l,const PhysicalNumber& r);
   friend bool operator < (const PhysicalNumber& l,const PhysicalNumber& r);
   friend bool operator >= (const PhysicalNumber& l,const PhysicalNumber& r);
   friend bool operator <= (const PhysicalNumber& l,const PhysicalNumber& r);
@@ -24,23 +23,19 @@ class PhysicalNumber{
   friend ostream& operator <<(ostream & os,const PhysicalNumber& f);
 
    private:
-     // private members
-     Unit unit;
+      Unit unit;
      double n;
   public:
-    //constructors
-     PhysicalNumber(double n,ariel::Unit unit);
-     //public operators
-     PhysicalNumber& operator ++();
+      PhysicalNumber(double n,ariel::Unit unit);
+      PhysicalNumber& operator ++();
      PhysicalNumber& operator --();
      PhysicalNumber operator ++(int);
      PhysicalNumber operator --( int);
-     // assisting function
-     double cast_it_to(ariel::Unit to_type) const;
-     string get_type(const PhysicalNumber& l); // return LENGTH||TIME||WEIGHT
-     Unit get_unit() const{return unit;} //return the original member of the class
-     double get_number() const{return n;} // return the original value
+      double cast(ariel::Unit to_type) const;
+     string getStype(const PhysicalNumber& l); 
+     Unit get_unit() const{return unit;} 
+    //  double get_number() const{return n;} 
      void set_number(double number){n=number;}
-     string get_string_unit(const PhysicalNumber& l); // return M,CM..HOUR..TON
+     string getUnit(const PhysicalNumber& l); 
 };
 };

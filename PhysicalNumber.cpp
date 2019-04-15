@@ -9,7 +9,7 @@ using ariel::PhysicalNumber;
 
 PhysicalNumber::PhysicalNumber(double num,Unit un):n(num),unit(un){}
 
-string get_string_unit(PhysicalNumber l){ // return the type name
+string getUnit(PhysicalNumber l){ // return the type name
 int x = l.get_unit();
 switch (x) {
   case 0:return "M";
@@ -24,8 +24,8 @@ switch (x) {
 }
 return "";
 }
-string get_type(const PhysicalNumber& l){ // return the class of the type
-  std::string s=get_string_unit(l);
+string getStype(const PhysicalNumber& l){ // return the class of the type
+  std::string s=getUnit(l);
   if(s.compare("M")==0||s.compare("CM")==0||s.compare("KM")==0)return "LENGTH";
   if(s.compare("G")==0||s.compare("KG")==0||s.compare("TON")==0)return "SIZE";
   if(s.compare("SEC")==0||s.compare("MIN")==0||s.compare("HOUR")==0)return "TIME";
@@ -46,7 +46,7 @@ bool isSameType(ariel::Unit u1 , ariel::Unit u2){
   return ans;
 }
 
-double ariel::PhysicalNumber::cast_it_to(ariel::Unit to_type) const{
+double ariel::PhysicalNumber::cast(ariel::Unit to_type) const{
   if(!isSameType(unit,to_type))  throw std::invalid_argument("Exception,they must be from the same type");
   double ans = 0;
   double x = n;
@@ -181,50 +181,50 @@ double ariel::PhysicalNumber::cast_it_to(ariel::Unit to_type) const{
 // the operators
 
 bool ariel::operator > (const PhysicalNumber& l,const PhysicalNumber& r){
-  if(get_type(l).compare(get_type(r))!=0){
+  if(getStype(l).compare(getStype(r))!=0){
     throw std::invalid_argument("Exception,they must be from the same type");}
     else {
-      double r_n = r.cast_it_to(l.unit);
+      double r_n = r.cast(l.unit);
       double l_n = l.n;
       return l_n>r_n;
     }
   }
 
 bool ariel::operator < (const PhysicalNumber& l,const PhysicalNumber& r){
-  if(get_type(l).compare(get_type(r))!=0){
+  if(getStype(l).compare(getStype(r))!=0){
     throw std::invalid_argument("Exception,they must be from the same type");}
     else{
-      double r_n = r.cast_it_to(l.unit);
+      double r_n = r.cast(l.unit);
       double l_n = l.n;
       return l_n<r_n;
     }
   }
 
 bool ariel::operator >= (const PhysicalNumber& l,const PhysicalNumber& r){
-  if(get_type(l).compare(get_type(r))!=0){
+  if(getStype(l).compare(getStype(r))!=0){
     throw std::invalid_argument("Exception,they must be from the same type");}
     else{
-      double r_n =r.cast_it_to(l.unit);
+      double r_n =r.cast(l.unit);
       double l_n = l.n;
       return l_n>=r_n;
     }
   }
 
 bool ariel::operator <= (const PhysicalNumber& l,const PhysicalNumber& r){
-  if(get_type(l).compare(get_type(r))!=0){
+  if(getStype(l).compare(getStype(r))!=0){
     throw std::invalid_argument("Exception,they must be from the same type");}
     else{
-      double r_n =r.cast_it_to(l.unit);
+      double r_n =r.cast(l.unit);
       double l_n = l.n;
       return l_n<=r_n;
     }
   }
 
 bool ariel::operator == (const PhysicalNumber& l,const PhysicalNumber& r){
-  if(get_type(l).compare(get_type(r))!=0){
+  if(getStype(l).compare(getStype(r))!=0){
     throw std::invalid_argument("Exception,they must be from the same type");}
     else{
-      double r_n =r.cast_it_to(l.unit);
+      double r_n =r.cast(l.unit);
       double l_n = l.n;
       return l_n==r_n;
     }
@@ -257,10 +257,10 @@ PhysicalNumber& ariel::PhysicalNumber::operator --(){
 }
 
 PhysicalNumber ariel::operator + (const PhysicalNumber& l,const PhysicalNumber& r){
-  if(get_type(l).compare(get_type(r))!=0){
+  if(getStype(l).compare(getStype(r))!=0){
     throw std::invalid_argument("Exception,they must be from the same type");}
     else{
-      double r_n = r.cast_it_to(l.unit);
+      double r_n = r.cast(l.unit);
       double l_n = l.n;
   PhysicalNumber temp(r_n+l_n,l.unit);
   return temp;
@@ -268,10 +268,10 @@ PhysicalNumber ariel::operator + (const PhysicalNumber& l,const PhysicalNumber& 
 }
 
 PhysicalNumber ariel::operator += (PhysicalNumber& l,const PhysicalNumber& r){
-   if(get_type(l).compare(get_type(r))!=0){
+   if(getStype(l).compare(getStype(r))!=0){
     throw std::invalid_argument("Exception,they must be from the same type");}
     else{
-      double r_n = r.cast_it_to(l.unit);
+      double r_n = r.cast(l.unit);
       double l_n = l.n;
       l.set_number(l_n+r_n);
    return l;
@@ -279,10 +279,10 @@ PhysicalNumber ariel::operator += (PhysicalNumber& l,const PhysicalNumber& r){
 }
 
 PhysicalNumber ariel::operator - (const PhysicalNumber& l,const PhysicalNumber& r){
-  if(get_type(l).compare(get_type(r))!=0){
+  if(getStype(l).compare(getStype(r))!=0){
     throw std::invalid_argument("Exception,they must be from the same type");}
     else{
-      double r_n = r.cast_it_to(l.unit);
+      double r_n = r.cast(l.unit);
       double l_n = l.n;
       PhysicalNumber temp(l_n-r_n,l.unit);
       return temp;}
@@ -296,10 +296,10 @@ PhysicalNumber ariel::operator - (const PhysicalNumber& l){
 PhysicalNumber ariel::operator + (const PhysicalNumber& l){return l;}
 
 PhysicalNumber ariel::operator -= (PhysicalNumber& l,const PhysicalNumber& r){
-  if(get_type(l).compare(get_type(r))!=0){
+  if(getStype(l).compare(getStype(r))!=0){
     throw std::invalid_argument("Exception,they must be from the same type");}
     else{
-      double r_n = r.cast_it_to(l.unit);
+      double r_n = r.cast(l.unit);
       double l_n = l.n;
       l.set_number(l_n-r_n);
     }
