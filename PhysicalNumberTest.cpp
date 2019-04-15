@@ -105,7 +105,15 @@ int main() {
     .CHECK_OUTPUT(b4-b1, "0.0994444444[hour]")                     //0.1[hour] - 2[sec]
     .CHECK_OUTPUT(b3-b2, "3.95[hour]")                             //4[hour] - 3[min]
 
-  .setname("Operator '+=' binary - Compatible dimensions")
+
+    .setname("Operator '-' binary - Incompatible dimensions")
+    .CHECK_THROWS(a1-b1)
+    .CHECK_THROWS(b1-c1)
+    .CHECK_THROWS(c1-a1)
+    .CHECK_THROWS(a2-c2)
+
+
+    .setname("Operator '+=' binary - Compatible dimensions")
     .CHECK_OUTPUT((a1+=a2), "300002[cm]")                             //a1 = 2[cm] + 3[km]
     .CHECK_OUTPUT((b1+=b3), "14402[sec]")                             //b1 = 2[sec] + 4[hour]
     .CHECK_OUTPUT((b3+=b2), "4.05[hour]")                             //b3 = 4[hour] + 3[min]
@@ -118,15 +126,6 @@ int main() {
     .CHECK_THROWS(b1+=c1)
     .CHECK_THROWS(c1+=a1)
     .CHECK_THROWS(a2+=c2)
-
-    .setname("Operator '-' binary - Incompatible dimensions")
-    .CHECK_THROWS(a1-b1)
-    .CHECK_THROWS(b1-c1)
-    .CHECK_THROWS(c1-a1)
-    .CHECK_THROWS(a2-c2)
-
-
-  
 
 
     .setname("Operator '-=' binary - Compatible dimensions")
@@ -187,7 +186,12 @@ int main() {
     .CHECK_EQUAL(c4>=c1,true)                                         //0.1[ton] >= 2[g]
 
 
- 
+    .setname("Operator '<=','>=' binary - Incompatible dimensions")
+    .CHECK_THROWS(a1<=b1)
+    .CHECK_THROWS(b1>=c1)
+    .CHECK_THROWS(c1>=a1)
+    .CHECK_THROWS(a2<=c2)
+
 
     .setname("Operator '<' binary - Compatible dimensions")
     .CHECK_EQUAL(a1<a1,false)                                         //2[cm] !< 2[cm]
@@ -198,11 +202,6 @@ int main() {
     .CHECK_EQUAL(c2<c3,true)                                          //3[kg] < 4[ton]
     .CHECK_EQUAL(c1<c4,true)                                          //2[g] < 0.1[ton]
 
-   .setname("Operator '<=','>=' binary - Incompatible dimensions")
-    .CHECK_THROWS(a1<=b1)
-    .CHECK_THROWS(b1>=c1)
-    .CHECK_THROWS(c1>=a1)
-    .CHECK_THROWS(a2<=c2)
 
     .setname("Operator '>' binary - Compatible dimensions")
     .CHECK_EQUAL(a1>a1,false)                                         //2[cm] !> 2[cm]
